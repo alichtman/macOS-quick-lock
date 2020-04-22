@@ -207,11 +207,23 @@ app.on("activate", () => {
 		createWindow();
 	}
 });
+
 app.on("window-all-closed", () => {
 	if (process.platform !== "darwin") {
 		app.quit();
 	}
 });
+
+app.on('will-finish-launching', () => {
+    app.on('open-file', (event, path) => {
+        if (path.endsWith(ENCRYPTED_FILE_EXTENSION)) {
+            // decrypt
+        } else {
+            // encrypt
+        }
+    });
+});
+
 
 ipcMain.on("encryptFileRequest", (event, arg) => {
 	const { filePath, password } = arg;
